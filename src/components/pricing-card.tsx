@@ -21,45 +21,26 @@ export default function PricingCard({
   user: User | null;
 }) {
   // Handle checkout process using predefined checkout links
-  const handleCheckout = async (planName: string) => {
+  const handleCheckout = () => {
     if (!user) {
-      // Redirect to login if user is not authenticated
       window.location.href = "/sign-in";
       return;
     }
 
-    // Use predefined checkout links - Updated URLs
-    const checkoutLinks = {
-      Basic: "https://polar.sh/checkout/7af83f16-219a-4540-a23d-c53a6a601e71",
-      Pro: "https://polar.sh/checkout/92eab301-8538-4430-9420-e1bc7a641eca",
-      Premium: "https://polar.sh/checkout/7c1f2fde-74ca-42ac-8ff3-9ad1d6972cd1",
-    };
-
-    const checkoutUrl = checkoutLinks[planName as keyof typeof checkoutLinks];
-
-    if (checkoutUrl) {
-      try {
-        // Add user metadata to the URL
-        const urlWithParams = new URL(checkoutUrl);
-        urlWithParams.searchParams.set("customer_email", user.email || "");
-        urlWithParams.searchParams.set(
-          "success_url",
-          `${window.location.origin}/dashboard`,
-        );
-        urlWithParams.searchParams.set("metadata[user_id]", user.id);
-
-        console.log("Redirecting to checkout:", urlWithParams.toString());
-        window.location.href = urlWithParams.toString();
-      } catch (error) {
-        console.error("Error creating checkout URL:", error);
-        // Fallback to direct URL
-        window.location.href = checkoutUrl;
-      }
-    } else {
-      console.error("Invalid plan name:", planName);
-      // Fallback to pricing page
+    const productPriceId = item?.prices?.[0]?.id;
+    if (!productPriceId) {
       window.location.href = "/pricing";
+      return;
     }
+
+    const params = new URLSearchParams();
+    params.set("products", productPriceId);
+    if (user.id) params.set("customerId", user.id);
+    if (user.email) params.set("customerEmail", user.email);
+    if (user.user_metadata?.full_name) params.set("customerName", user.user_metadata.full_name);
+    params.set("metadata", encodeURIComponent(JSON.stringify({ user_id: user.id })));
+
+    window.location.href = `/checkout?${params.toString()}`;
   };
 
   return (
@@ -99,9 +80,7 @@ export default function PricingCard({
       )}
       <CardFooter className="relative">
         <Button
-          onClick={async () => {
-            await handleCheckout(item.name);
-          }}
+          onClick={handleCheckout}
           className={`w-full py-6 text-lg font-medium ${
             item.popular
               ? "bg-gradient-to-r from-blue-600 to-teal-600 hover:from-blue-700 hover:to-teal-700 text-white shadow-lg hover:shadow-xl transition-all duration-200"
