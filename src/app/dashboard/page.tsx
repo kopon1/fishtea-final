@@ -12,6 +12,7 @@ import { Suspense } from "react";
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
 
 export default async function Dashboard() {
   const supabase = await createClient();
@@ -37,6 +38,14 @@ export default async function Dashboard() {
 
   const currentLimits = tierLimits[tier as keyof typeof tierLimits];
   const usagePercentage = (monthlyUsage / currentLimits.perMonth) * 100;
+
+  // Fetch user humanizations
+  const { data: chatLogs } = await supabase
+    .from("humanizations")
+    .select("id, input_text, output_text, created_at")
+    .eq("user_id", user.id)
+    .order("created_at", { ascending: false })
+    .limit(10);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-teal-50">
@@ -204,35 +213,51 @@ export default async function Dashboard() {
             </div>
           </section>
 
-          {/* User Profile Section */}
+          {/* Account Information */}
           <section className="bg-white rounded-xl p-6 border shadow-sm">
-            <div className="flex items-center gap-4 mb-6">
-              <UserCircle size={48} className="text-blue-600" />
-              <div>
-                <h2 className="font-semibold text-xl">Account Information</h2>
-                <p className="text-sm text-gray-600">{user.email}</p>
+            <h2 className="font-semibold text-xl mb-4">Account Information</h2>
+            <div className="flex flex-col gap-2">
+              <div className="flex items-center gap-3">
+                <UserCircle className="h-8 w-8 text-blue-600" />
+                <div>
+                  <div className="font-semibold text-lg">{user.email}</div>
+                  <div className="text-sm text-gray-600">Email: {user.email}</div>
+                  <div className="text-sm text-gray-600">Member Since: {user.created_at ? new Date(user.created_at).toLocaleDateString() : "-"}</div>
+                </div>
+                <div className="ml-auto text-right">
+                  <div className="text-sm text-gray-600">Plan: <span className="font-semibold">{currentLimits.name}</span></div>
+                  <div className="text-sm text-green-600 font-semibold">Status: Active</div>
+                </div>
               </div>
             </div>
-            <div className="grid md:grid-cols-2 gap-4 text-sm">
-              <div>
-                <span className="font-medium text-gray-700">Email:</span>
-                <span className="ml-2 text-gray-600">{user.email}</span>
-              </div>
-              <div>
-                <span className="font-medium text-gray-700">Plan:</span>
-                <span className="ml-2 text-gray-600">{currentLimits.name}</span>
-              </div>
-              <div>
-                <span className="font-medium text-gray-700">Member Since:</span>
-                <span className="ml-2 text-gray-600">
-                  {new Date(user.created_at).toLocaleDateString()}
-                </span>
-              </div>
-              <div>
-                <span className="font-medium text-gray-700">Status:</span>
-                <span className="ml-2 text-green-600 font-medium">Active</span>
-              </div>
-            </div>
+          </section>
+
+          {/* Chat Logs Section */}
+          <section className="bg-white rounded-xl p-6 border shadow-sm">
+            <h2 className="font-semibold text-xl mb-4">Chat Logs</h2>
+            <Accordion type="single" collapsible className="w-full">
+              {chatLogs && chatLogs.length > 0 ? (
+                chatLogs.map((log: any) => (
+                  <AccordionItem key={log.id} value={log.id}>
+                    <AccordionTrigger>
+                      {new Date(log.created_at).toLocaleString()}
+                    </AccordionTrigger>
+                    <AccordionContent>
+                      <div className="mb-2">
+                        <span className="font-semibold text-blue-700">You:</span>
+                        <span className="ml-2 text-gray-800">{log.input_text}</span>
+                      </div>
+                      <div>
+                        <span className="font-semibold text-green-700">AI:</span>
+                        <span className="ml-2 text-gray-800">{log.output_text}</span>
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+                ))
+              ) : (
+                <div className="text-gray-500">No chat logs found.</div>
+              )}
+            </Accordion>
           </section>
         </div>
       </main>
