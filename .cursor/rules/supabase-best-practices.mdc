@@ -1,0 +1,10 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+- Use Supabase's real-time capabilities for dynamic data updates.
+- Implement proper authentication flows using Supabase Auth.
+- Structure your database and API calls for scalability and maintainability.
+
+- Handle errors and loading states effectively in your UI.

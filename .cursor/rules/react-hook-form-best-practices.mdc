@@ -1,0 +1,10 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+- Use the `useForm` hook to manage form state efficiently.
+- Implement validation using Zod for type-safe schema validation.
+- Leverage the `Controller` component for integrating with custom inputs.
+
+- Optimize performance by minimizing re-renders with `useForm` methods.

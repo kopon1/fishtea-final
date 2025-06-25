@@ -1,0 +1,78 @@
+Please adapt the globs depending on your project structure.
+
+---
+name: nextjs-best-practices.mdc
+description: Best practices for Next.js applications and routing
+globs: **/*.{ts,tsx}
+---
+
+- Use the App Router for better performance and organization.
+- Implement proper error boundaries to handle errors gracefully.
+- Utilize built-in data fetching methods (getStaticProps, getServerSideProps) effectively.
+- Optimize images using the Next.js Image component.
+
+---
+name: typescript-best-practices.mdc 
+description: TypeScript coding standards and type safety guidelines
+globs: **/*.{ts,tsx}
+---
+
+- Enable strict mode in tsconfig for better type safety.
+- Prefer using interfaces over type aliases for object shapes.
+- Utilize type guards and assertions to ensure type safety at runtime.
+- Implement proper type inference to reduce redundancy.
+
+---
+name: radix-ui-best-practices.mdc
+description: Best practices for using Radix UI components
+globs: **/*.{ts,tsx}
+---
+
+- Use Radix components for accessibility and composability.
+- Ensure proper keyboard navigation and focus management.
+- Customize styles using the class-variance-authority for consistent theming.
+- Leverage the context menu and dropdown components for enhanced user interactions.
+
+---
+name: supabase-best-practices.mdc
+description: Guidelines for integrating Supabase in applications
+globs: **/*.{ts,tsx}
+---
+
+- Use Supabase's real-time capabilities for dynamic data updates.
+- Implement proper authentication flows using Supabase Auth.
+- Structure your database and API calls for scalability and maintainability.
+- Handle errors and loading states effectively in your UI.
+
+---
+name: react-hook-form-best-practices.mdc
+description: Best practices for form handling with React Hook Form
+globs: **/*.{ts,tsx}
+---
+
+- Use the `useForm` hook to manage form state efficiently.
+- Implement validation using Zod for type-safe schema validation.
+- Leverage the `Controller` component for integrating with custom inputs.
+- Optimize performance by minimizing re-renders with `useForm` methods.
+
+---
+name: tailwindcss-best-practices.mdc
+description: Guidelines for styling with Tailwind CSS
+globs: **/*.{ts,tsx,css}
+---
+
+- Use utility-first classes for rapid UI development.
+- Implement responsive design using Tailwind's responsive utilities.
+- Utilize `tailwind-merge` to manage conflicting class names effectively.
+- Keep styles consistent by using a design system or component library.
+
+---
+name: zod-best-practices.mdc
+description: Best practices for schema validation with Zod
+globs: **/*.{ts,tsx}
+---
+
+- Define schemas for data validation to ensure type safety.
+- Use Zod's built-in methods for complex validations (e.g., `.refine()`).
+- Integrate Zod with React Hook Form for seamless form validation.
+- Keep schemas modular and reusable across different components.

@@ -1,0 +1,10 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+- Use Radix components for accessibility and composability.
+- Ensure proper keyboard navigation and focus management.
+- Customize styles using the class-variance-authority for consistent theming.
+
+- Leverage the context menu and dropdown components for enhanced user interactions.

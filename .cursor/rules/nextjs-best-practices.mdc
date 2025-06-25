@@ -1,0 +1,10 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+- Use the App Router for better performance and organization.
+- Implement proper error boundaries to handle errors gracefully.
+- Utilize built-in data fetching methods (getStaticProps, getServerSideProps) effectively.
+
+- Optimize images using the Next.js Image component.

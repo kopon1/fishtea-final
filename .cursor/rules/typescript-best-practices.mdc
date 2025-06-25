@@ -1,0 +1,10 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+- Enable strict mode in tsconfig for better type safety.
+- Prefer using interfaces over type aliases for object shapes.
+- Utilize type guards and assertions to ensure type safety at runtime.
+
+- Implement proper type inference to reduce redundancy.

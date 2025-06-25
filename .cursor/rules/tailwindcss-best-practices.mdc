@@ -1,0 +1,10 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+- Use utility-first classes for rapid UI development.
+- Implement responsive design using Tailwind's responsive utilities.
+- Utilize `tailwind-merge` to manage conflicting class names effectively.
+
+- Keep styles consistent by using a design system or component library.
