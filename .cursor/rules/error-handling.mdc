@@ -1,0 +1,6 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+If these aren't related to any role/tier-access functionalities such as me being a free user and it returns error, because I'm not a paid user means the error is intentional and good. But if it's just a error that needs to be fixed, just fix it.

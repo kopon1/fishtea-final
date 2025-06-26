@@ -69,8 +69,8 @@ export default async function Dashboard() {
                   </Button>
                 </Link>
                 <Suspense fallback={<div>Loading...</div>}>
-                  {result?.url && (
-                    <ManageSubscription redirectUrl={result?.url!} />
+                  {typeof result === "object" && result !== null && "url" in result && result.url && (
+                    <ManageSubscription redirectUrl={result.url} />
                   )}
                 </Suspense>
               </div>

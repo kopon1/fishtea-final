@@ -132,8 +132,8 @@ export default function AIHumanizerPage() {
         setOutputText(result.outputText || "");
         setUserData({
           tier: result.tier,
-          monthlyUsage: result.monthlyUsage,
-          monthlyLimit: result.monthlyLimit,
+          monthlyUsage: result.monthlyUsage ?? 0,
+          monthlyLimit: result.monthlyLimit ?? 0,
         });
         setDetectionScores({
           initial: result.initialDetectionScore || null,
@@ -546,10 +546,12 @@ export default function AIHumanizerPage() {
             <Button
               onClick={handleHumanize}
               disabled={
-                !inputText.trim() ||
-                isProcessing ||
-                wordCount > currentLimits.perRequest ||
-                (userData && userData.monthlyUsage >= userData.monthlyLimit)
+                !!(
+                  !inputText.trim() ||
+                  isProcessing ||
+                  wordCount > currentLimits.perRequest ||
+                  (userData && userData.monthlyUsage >= userData.monthlyLimit)
+                )
               }
               className="w-full bg-gradient-to-r from-blue-600 to-teal-600 hover:from-blue-700 hover:to-teal-700 disabled:opacity-50 disabled:cursor-not-allowed"
               size="lg"
