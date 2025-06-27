@@ -103,10 +103,70 @@ export default async function Home() {
               grow.
             </p>
           </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            {result?.map((item: any) => (
-              <PricingCard key={item.id} item={item} user={user} />
-            ))}
+          <div className="flex flex-col md:flex-row gap-8 justify-center items-stretch max-w-5xl mx-auto">
+            {/* Basic Plan */}
+            <div className="relative flex-1 bg-white rounded-2xl shadow-lg border border-gray-200 flex flex-col p-8 transition-transform hover:scale-[1.03] justify-between">
+              <div>
+                <h3 className="text-2xl font-bold mb-2 text-gray-900 text-center">Basic Plan</h3>
+                <div className="text-center mb-1">
+                  <span className="text-3xl font-extrabold text-blue-600">$4.99</span>
+                  <span className="text-gray-500 text-lg font-medium">/month</span>
+                </div>
+                <p className="text-gray-600 text-center mb-6">For individual creators</p>
+                <ul className="mb-8 space-y-2">
+                  <li className="flex items-center gap-2 text-sm text-gray-800"><svg className="w-4 h-4 text-teal-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>10,000 words per month</li>
+                  <li className="flex items-center gap-2 text-sm text-gray-800"><svg className="w-4 h-4 text-teal-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>1,000 words per request</li>
+                  <li className="flex items-center gap-2 text-sm text-gray-800"><svg className="w-4 h-4 text-teal-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>Email support</li>
+                  <li className="flex items-center gap-2 text-sm text-gray-400 line-through"><svg className="w-4 h-4 text-gray-300" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>20,000 words per month</li>
+                  <li className="flex items-center gap-2 text-sm text-gray-400 line-through"><svg className="w-4 h-4 text-gray-300" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>2,000 words per request</li>
+                  <li className="flex items-center gap-2 text-sm text-gray-400 line-through"><svg className="w-4 h-4 text-gray-300" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>Priority support</li>
+                  <li className="flex items-center gap-2 text-sm text-gray-400 line-through"><svg className="w-4 h-4 text-gray-300" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>35,000 words per month</li>
+                  <li className="flex items-center gap-2 text-sm text-gray-400 line-through"><svg className="w-4 h-4 text-gray-300" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>5,000 words per request</li>
+                  <li className="flex items-center gap-2 text-sm text-gray-400 line-through"><svg className="w-4 h-4 text-gray-300" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>24/7 priority support</li>
+                </ul>
+              </div>
+              <a href="/pricing" className="w-full py-3 text-base font-semibold rounded-lg bg-blue-100 text-blue-700 hover:bg-blue-200 text-center block mt-auto">Get Basic</a>
+            </div>
+            {/* Pro Plan */}
+            <div className="relative flex-1 bg-white rounded-2xl shadow-lg border-2 border-blue-500 shadow-xl z-10 flex flex-col p-8 transition-transform hover:scale-[1.03] justify-between">
+              <div>
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-blue-500 text-white text-xs font-semibold px-4 py-1 rounded-full shadow">Most Popular</div>
+                <h3 className="text-2xl font-bold mb-2 text-gray-900 text-center">Pro Plan</h3>
+                <div className="text-center mb-1">
+                  <span className="text-3xl font-extrabold text-blue-600">$9.99</span>
+                  <span className="text-gray-500 text-lg font-medium">/month</span>
+                </div>
+                <p className="text-gray-600 text-center mb-6">For content professionals</p>
+                <ul className="mb-8 space-y-2">
+                  <li className="flex items-center gap-2 text-sm text-gray-800"><svg className="w-4 h-4 text-teal-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>Everything in Basic</li>
+                  <li className="flex items-center gap-2 text-sm text-gray-800"><svg className="w-4 h-4 text-teal-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>20,000 words per month</li>
+                  <li className="flex items-center gap-2 text-sm text-gray-800"><svg className="w-4 h-4 text-teal-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>2,000 words per request</li>
+                  <li className="flex items-center gap-2 text-sm text-gray-800"><svg className="w-4 h-4 text-teal-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>Priority support</li>
+                  <li className="flex items-center gap-2 text-sm text-gray-400 line-through"><svg className="w-4 h-4 text-gray-300" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>35,000 words per month</li>
+                  <li className="flex items-center gap-2 text-sm text-gray-400 line-through"><svg className="w-4 h-4 text-gray-300" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>5,000 words per request</li>
+                  <li className="flex items-center gap-2 text-sm text-gray-400 line-through"><svg className="w-4 h-4 text-gray-300" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>24/7 priority support</li>
+                </ul>
+              </div>
+              <a href="/pricing" className="w-full py-3 text-base font-semibold rounded-lg bg-gradient-to-r from-blue-600 to-teal-600 hover:from-blue-700 hover:to-teal-700 text-white text-center block mt-auto">Get Pro</a>
+            </div>
+            {/* Premium Plan */}
+            <div className="relative flex-1 bg-white rounded-2xl shadow-lg border border-gray-200 flex flex-col p-8 transition-transform hover:scale-[1.03] justify-between">
+              <div>
+                <h3 className="text-2xl font-bold mb-2 text-gray-900 text-center">Premium Plan</h3>
+                <div className="text-center mb-1">
+                  <span className="text-3xl font-extrabold text-blue-600">$19.99</span>
+                  <span className="text-gray-500 text-lg font-medium">/month</span>
+                </div>
+                <p className="text-gray-600 text-center mb-6">For teams</p>
+                <ul className="mb-8 space-y-2">
+                  <li className="flex items-center gap-2 text-sm text-gray-800"><svg className="w-4 h-4 text-teal-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>Everything in Pro</li>
+                  <li className="flex items-center gap-2 text-sm text-gray-800"><svg className="w-4 h-4 text-teal-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>35,000 words per month</li>
+                  <li className="flex items-center gap-2 text-sm text-gray-800"><svg className="w-4 h-4 text-teal-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>5,000 words per request</li>
+                  <li className="flex items-center gap-2 text-sm text-gray-800"><svg className="w-4 h-4 text-teal-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>24/7 priority support</li>
+                </ul>
+              </div>
+              <a href="/pricing" className="w-full py-3 text-base font-semibold rounded-lg bg-blue-100 text-blue-700 hover:bg-blue-200 text-center block mt-auto">Get Premium</a>
+            </div>
           </div>
         </div>
       </section>

@@ -212,6 +212,11 @@ export const manageSubscriptionAction = async (userId: string) => {
     return false;
   }
 
+  // Guard: No active subscription or missing customer_id
+  if (!subscription || !subscription.customer_id) {
+    return { error: "No active subscription found" };
+  }
+
   const polar = new Polar({
     server: "sandbox",
     accessToken: process.env.POLAR_ACCESS_TOKEN,

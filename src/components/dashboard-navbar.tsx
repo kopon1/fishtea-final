@@ -54,7 +54,7 @@ export default function DashboardNavbar() {
               Dashboard
             </Button>
           </Link>
-          <Link href="/pricing">
+          <Link href="/#pricing" scroll>
             <Button
               variant="ghost"
               size="sm"
