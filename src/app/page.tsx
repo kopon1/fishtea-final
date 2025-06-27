@@ -4,6 +4,41 @@ import Navbar from "@/components/navbar";
 import PricingCard from "@/components/pricing-card";
 import { ArrowUpRight, CheckCircle2, Shield, Users, Zap } from "lucide-react";
 import { createClient } from "../../supabase/server";
+import { useEffect, useState } from "react"
+// @ts-ignore
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
+
+function UpgradeButton({ planKey, children, className }: { planKey: string; children: React.ReactNode; className?: string }) {
+  const [user, setUser] = useState<any>(null)
+  useEffect(() => {
+    const supabase = createClientComponentClient()
+    supabase.auth.getUser().then((result: { data: { user: any } }) => setUser(result.data.user))
+  }, [])
+
+  const checkoutLinks = {
+    basic: "https://sandbox-api.polar.sh/v1/checkout-links/polar_cl_g9vUjb1pCNJkSHYwIsO9jmB57a8vM4zmlhDGM2jyZdp/redirect",
+    pro: "https://sandbox-api.polar.sh/v1/checkout-links/polar_cl_RdglhsWU6q0hcbcbXYAla4ZUAOPMf6bbXqNtV1KgcuR/redirect",
+    premium: "https://sandbox-api.polar.sh/v1/checkout-links/polar_cl_UU4n1I1GXLq78y7xp9hdMfpRKHhSvYqUPiUJT1NzNoj/redirect",
+  }
+
+  const handleClick = () => {
+    const checkoutUrl = checkoutLinks[planKey as keyof typeof checkoutLinks]
+    if (!checkoutUrl) return
+    if (user) {
+      const urlWithParams = new URL(checkoutUrl)
+      urlWithParams.searchParams.set("customer_email", user.email || "")
+      urlWithParams.searchParams.set("success_url", `${window.location.origin}/dashboard`)
+      urlWithParams.searchParams.set("metadata[user_id]", user.id)
+      window.location.href = urlWithParams.toString()
+    } else {
+      window.location.href = checkoutUrl
+    }
+  }
+
+  return (
+    <button className={className} onClick={handleClick}>{children}</button>
+  )
+}
 
 export default async function Home() {
   const supabase = await createClient();
@@ -125,7 +160,7 @@ export default async function Home() {
                   <li className="flex items-center gap-2 text-sm text-gray-400 line-through"><svg className="w-4 h-4 text-gray-300" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>24/7 priority support</li>
                 </ul>
               </div>
-              <a href="/pricing" className="w-full py-3 text-base font-semibold rounded-lg bg-blue-100 text-blue-700 hover:bg-blue-200 text-center block mt-auto">Get Basic</a>
+              <UpgradeButton planKey="basic" className="w-full py-3 text-base font-semibold rounded-lg bg-blue-100 text-blue-700 hover:bg-blue-200 text-center block mt-auto">Get Basic</UpgradeButton>
             </div>
             {/* Pro Plan */}
             <div className="relative flex-1 bg-white rounded-2xl shadow-lg border-2 border-blue-500 shadow-xl z-10 flex flex-col p-8 transition-transform hover:scale-[1.03] justify-between">
@@ -147,7 +182,7 @@ export default async function Home() {
                   <li className="flex items-center gap-2 text-sm text-gray-400 line-through"><svg className="w-4 h-4 text-gray-300" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>24/7 priority support</li>
                 </ul>
               </div>
-              <a href="/pricing" className="w-full py-3 text-base font-semibold rounded-lg bg-gradient-to-r from-blue-600 to-teal-600 hover:from-blue-700 hover:to-teal-700 text-white text-center block mt-auto">Get Pro</a>
+              <UpgradeButton planKey="pro" className="w-full py-3 text-base font-semibold rounded-lg bg-gradient-to-r from-blue-600 to-teal-600 hover:from-blue-700 hover:to-teal-700 text-white text-center block mt-auto">Get Pro</UpgradeButton>
             </div>
             {/* Premium Plan */}
             <div className="relative flex-1 bg-white rounded-2xl shadow-lg border border-gray-200 flex flex-col p-8 transition-transform hover:scale-[1.03] justify-between">
@@ -165,7 +200,7 @@ export default async function Home() {
                   <li className="flex items-center gap-2 text-sm text-gray-800"><svg className="w-4 h-4 text-teal-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>24/7 priority support</li>
                 </ul>
               </div>
-              <a href="/pricing" className="w-full py-3 text-base font-semibold rounded-lg bg-blue-100 text-blue-700 hover:bg-blue-200 text-center block mt-auto">Get Premium</a>
+              <UpgradeButton planKey="premium" className="w-full py-3 text-base font-semibold rounded-lg bg-blue-100 text-blue-700 hover:bg-blue-200 text-center block mt-auto">Get Premium</UpgradeButton>
             </div>
           </div>
         </div>
