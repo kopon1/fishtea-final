@@ -182,11 +182,11 @@ export default function AIHumanizerPage() {
   const handleUpgrade = async (planName: string) => {
     if (!user) return;
 
-    // Use predefined checkout links for direct upgrade
+    // Use new sandbox checkout links
     const checkoutLinks = {
-      basic: "https://polar.sh/checkout/7af83f16-219a-4540-a23d-c53a6a601e71",
-      pro: "https://polar.sh/checkout/92eab301-8538-4430-9420-e1bc7a641eca",
-      premium: "https://polar.sh/checkout/7c1f2fde-74ca-42ac-8ff3-9ad1d6972cd1",
+      basic: "https://sandbox-api.polar.sh/v1/checkout-links/polar_cl_g9vUjb1pCNJkSHYwIsO9jmB57a8vM4zmlhDGM2jyZdp/redirect",
+      pro: "https://sandbox-api.polar.sh/v1/checkout-links/polar_cl_RdglhsWU6q0hcbcbXYAla4ZUAOPMf6bbXqNtV1KgcuR/redirect",
+      premium: "https://sandbox-api.polar.sh/v1/checkout-links/polar_cl_UU4n1I1GXLq78y7xp9hdMfpRKHhSvYqUPiUJT1NzNoj/redirect",
     };
 
     const checkoutUrl =
