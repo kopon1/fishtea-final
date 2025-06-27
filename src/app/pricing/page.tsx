@@ -1,7 +1,12 @@
+"use client";
 import { Button } from "@/components/ui/button"
 import clsx from "clsx"
 import { ArrowLeft } from "lucide-react"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { useEffect, useState } from "react"
+// @ts-ignore
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
 
 const plans = [
   {
@@ -22,6 +27,7 @@ const plans = [
     ],
     cta: "Get Basic",
     highlight: false,
+    planKey: "basic",
   },
   {
     name: "Pro Plan",
@@ -40,6 +46,7 @@ const plans = [
     cta: "Get Pro",
     highlight: true,
     badge: "Most Popular",
+    planKey: "pro",
   },
   {
     name: "Premium Plan",
@@ -54,6 +61,7 @@ const plans = [
     ],
     cta: "Get Premium",
     highlight: false,
+    planKey: "premium",
   },
 ]
 
@@ -63,6 +71,39 @@ function BackToDashboard() {
       <ArrowLeft className="w-5 h-5" />
       Back to Dashboard
     </Link>
+  )
+}
+
+function UpgradeButton({ planKey, children, className }: { planKey: string; children: React.ReactNode; className?: string }) {
+  const router = useRouter()
+  const [user, setUser] = useState<any>(null)
+  useEffect(() => {
+    const supabase = createClientComponentClient()
+    supabase.auth.getUser().then((result: { data: { user: any } }) => setUser(result.data.user))
+  }, [])
+
+  const checkoutLinks = {
+    basic: "https://sandbox-api.polar.sh/v1/checkout-links/polar_cl_g9vUjb1pCNJkSHYwIsO9jmB57a8vM4zmlhDGM2jyZdp/redirect",
+    pro: "https://sandbox-api.polar.sh/v1/checkout-links/polar_cl_RdglhsWU6q0hcbcbXYAla4ZUAOPMf6bbXqNtV1KgcuR/redirect",
+    premium: "https://sandbox-api.polar.sh/v1/checkout-links/polar_cl_UU4n1I1GXLq78y7xp9hdMfpRKHhSvYqUPiUJT1NzNoj/redirect",
+  }
+
+  const handleClick = () => {
+    const checkoutUrl = checkoutLinks[planKey as keyof typeof checkoutLinks]
+    if (!checkoutUrl) return
+    if (user) {
+      const urlWithParams = new URL(checkoutUrl)
+      urlWithParams.searchParams.set("customer_email", user.email || "")
+      urlWithParams.searchParams.set("success_url", `${window.location.origin}/dashboard`)
+      urlWithParams.searchParams.set("metadata[user_id]", user.id)
+      window.location.href = urlWithParams.toString()
+    } else {
+      window.location.href = checkoutUrl
+    }
+  }
+
+  return (
+    <Button className={className} size="lg" onClick={handleClick}>{children}</Button>
   )
 }
 
@@ -119,17 +160,17 @@ export default function PricingPage() {
                   ))}
                 </ul>
               </div>
-              <Button
+              <UpgradeButton
+                planKey={plan.planKey}
                 className={clsx(
                   "w-full py-3 text-base font-semibold rounded-lg mt-auto",
                   plan.highlight
                     ? "bg-gradient-to-r from-blue-600 to-teal-600 hover:from-blue-700 hover:to-teal-700 text-white"
                     : "bg-blue-100 text-blue-700 hover:bg-blue-200"
                 )}
-                size="lg"
               >
                 {plan.cta}
-              </Button>
+              </UpgradeButton>
             </div>
           ))}
         </div>
